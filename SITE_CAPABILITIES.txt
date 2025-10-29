@@ -1,0 +1,547 @@
+================================================================================
+                    VENGE.IO MODDING REPOSITORY - COMPLETE CAPABILITIES
+================================================================================
+
+OVERVIEW
+========
+This is a comprehensive web-based modding platform for Venge.io, a browser-based FPS game. 
+The site provides professional-grade tools for creating, editing, and managing custom game 
+assets including textures, sounds, and visual modifications. It features over 1,200+ game 
+assets with advanced editing capabilities and seamless browser integration.
+
+CORE ARCHITECTURE
+=================
+• Frontend Framework: Pure Vanilla JavaScript (ES6+) with modular design
+• Rendering Engine: HTML5 Canvas API for real-time image processing
+• Asset Processing: Client-side image manipulation using Canvas 2D Context
+• Storage Systems: SessionStorage, Blob URLs, IndexedDB-ready architecture
+• Export Engine: JSZip 3.10.1 with FileSaver.js 2.0.5 integration
+• UI Framework: CSS Grid/Flexbox with Font Awesome 6.0.0 icons
+• Browser Extension: Chrome Manifest V2 with comprehensive permissions
+
+MAIN INTERFACE FEATURES
+=======================
+
+1. ASSET MANAGEMENT SYSTEM
+---------------------------
+• Smart Search Engine:
+  - Real-time filtering as you type
+  - Multi-field search (filenames, folder IDs, asset types)
+  - Case-insensitive search functionality
+  - One-click search reset capability
+
+• Dynamic Asset Display:
+  - Card-based grid layout with thumbnails
+  - Automatic responsive columns based on viewport
+  - Lazy loading with Intersection Observer for performance
+  - Smooth CSS transitions for state changes
+
+• Asset Organization:
+  - 1,200+ assets across JPG, PNG, and MP3 formats
+  - Alphabetical sorting by filename
+  - Visual state indicators for modified/excluded assets
+  - Folder ID system for easy asset identification
+
+• Fullscreen Preview System:
+  - Click-to-zoom functionality
+  - Resolution display and filename overlay
+  - High-quality image inspection
+  - Smooth modal transitions
+
+2. PROFESSIONAL ASSET EDITOR
+-----------------------------
+• Real-time Canvas Editing:
+  - HTML5 Canvas-based texture editor with live preview
+  - Non-destructive editing workflow preserves originals
+  - Automatic canvas sizing based on image dimensions
+  - Memory-safe blob URL management
+
+• Advanced Saturation Control:
+  - Precise luminance-based saturation adjustment (0-200%)
+  - Professional color adjustment algorithm
+  - Real-time preview updates as you adjust settings
+  - Maintains original image quality and format integrity
+
+• Dual-Mode Editing System:
+  - MODIFY MODE: Edit existing textures with live preview
+  - CREATE MODE: Generate new textures with custom specifications
+    * Custom dimensions: 1x1 to 4096x4096 pixels
+    * Full spectrum color picker
+    * Solid fill generation for UI elements
+    * Instant preview before saving
+
+• Format Support & Conversion:
+  - JPEG (.jpg): Quality preservation, progressive encoding, sRGB color space
+  - PNG (.png): Full alpha transparency, lossless compression, gamma correction
+  - Automatic PNG ↔ JPEG conversion during operations
+  - Metadata retention where possible
+
+3. ADVANCED BULK OPERATIONS SUITE
+----------------------------------
+• Intelligent Multi-Selection:
+  - Visual selection indicators with Font Awesome checkmarks
+  - Automatic MP3 exclusion from image operations
+  - Real-time selection counter with grammatical accuracy
+  - Selection persistence during operations
+
+• Comprehensive Bulk Tools:
+  - SATURATION PROCESSING: Apply consistent saturation across hundreds of assets
+  - TEXTURE GENERATION: Create identical textures for multiple assets simultaneously
+  - IMAGE UPLOAD & CONVERSION: Replace multiple textures with automatic format conversion
+  - BATCH RESIZING: Maintain aspect ratios with optional constraint controls
+  - EXCLUSION MANAGEMENT: Toggle assets in/out of export packages
+
+• Progress Tracking & Error Handling:
+  - Real-time progress bars with detailed console logging
+  - Individual asset error handling doesn't stop batch operations
+  - Memory-efficient processing prevents browser crashes
+  - Async operations with Promise.all() for optimal performance
+
+4. SOPHISTICATED IMPORT/EXPORT SYSTEM
+--------------------------------------
+• Advanced JSON Configuration:
+  - Image deduplication using unique image hashing
+  - Metadata preservation maintains asset relationships
+  - Incremental updates only export modified/new assets
+  - Base64 encoding with error validation and recovery
+
+• Dual Export Modes:
+  - CLIENT EXPORT: Optimized for direct game integration
+  - BROWSER EXPORT: Chrome extension compatible structure
+  - Selective export excludes specific assets from packages
+  - ZIP compression with DEFLATE algorithm
+
+• Data Integrity Features:
+  - Schema validation for import/export operations
+  - Graceful handling of corrupted or incomplete imports
+  - Session persistence of exclusion states
+  - Automatic state saving across browser sessions
+
+ASSET CATALOG BREAKDOWN
+=======================
+
+1. CHARACTER MODEL TEXTURES (50+ Assets)
+-----------------------------------------
+• Echo Character Variants:
+  - Echo-Default.jpg (Base character skin)
+  - Echo-Diamond-Base_color.jpg (Premium diamond variant with PBR textures)
+  - Echo-Demon-emission.jpg (Dark themed skin with emissive effects)
+  - Echo-Jester-texture.jpg (Colorful carnival-themed variant)
+  - Echo-Killer-texture.jpg (Combat-focused dark skin)
+  - Echo-Rendeer_Texture.jpg (Holiday seasonal variant)
+  - Echo-Texture-RoboLove.jpg (Futuristic robotic theme)
+
+• Kulu Character Variants:
+  - Kulu-Default.jpg (Standard character appearance)
+  - Kulu-Diamond-Base_color.jpg (Luxury diamond skin with PBR workflow)
+  - Kulu-Egyptian.jpg (Ancient Egypt themed variant)
+  - Kulu-Totem_Texture.jpg (Tribal/spiritual themed skin)
+  - Kulu-Eros_Texture.jpg (Valentine's themed variant)
+  - Kulu-Stone-skin-emissive.jpg (Stone texture with glowing effects)
+
+• Lilium Character Variants:
+  - Lilium-Default.jpg (Base female character model)
+  - Lilium-Diamond-Base_color.jpg (Premium variant with full PBR workflow)
+  - Lilium-Wizard_fix.jpg (Magical/fantasy themed skin)
+  - Lilium-Killer-texture.jpg (Combat variant)
+  - Dragon_Lilium_Texture.jpg (Dragon-themed epic skin)
+  - Hawaian-Lilium_Texture.jpg (Tropical summer variant)
+
+• Shin Character Variants:
+  - Shin-Default.jpg (Standard ninja character)
+  - Shin-Diamond-Base_color.jpg (Premium diamond skin)
+  - Shin-Ninja.jpg (Enhanced stealth variant)
+  - Shin-Snowman.jpg (Winter holiday theme)
+  - Shin-Pirate-texture.jpg (Pirate-themed variant)
+  - Shin-Texture-Warrior.jpg (Battle-hardened appearance)
+
+2. WEAPON TEXTURE COLLECTION (80+ Assets)
+------------------------------------------
+• Assault Rifles:
+  - AK-47 Series: ak47_nochain_txt_fix.jpg, ak47-christmas.jpg, ak47-magma.jpg, ak47-valentines.jpg
+  - M4 Series: M4-Optimized.jpg, m4-christmas.jpg, m4-magma.jpg, m4-valentines.jpg
+  - SCAR Series: Scar_Base_color.jpg, scar-magma.jpg, scar-valentines.jpg, Scar-Christmas-2023.jpg
+
+• Sniper Rifles:
+  - AWP Series: AWP_Base_color.jpg, AWP-Christmas-2023-Texture.jpg, AWP_Normal.jpg, AWP_Roughness.jpg
+  - Standard Sniper: Sniper-Texture-Optimized.jpg, sniper-magma.jpg, sniper-abyss.jpg, sniper-sweety.jpg
+
+• Pistols & SMGs:
+  - Desert Eagle: Deagle-Texture-Optimized.jpg, deagle-magma.jpg, desert_eagle-dragon-texture.jpg
+  - Tec-9: Tec-9-Texture-Optimized.jpg, tec9-magma.jpg, Tec9-Spike.jpg, tec9-candyrush.jpg
+
+• Special Weapons:
+  - LMG: LMG-Optimized.jpg, LMG.jpg
+  - Shotgun: Shotgun-Texture-Optimized.jpg, shotgun-magma.jpg, shotgun-hellraiser.jpg
+  - Rocket Launcher: rocket_launcher_Albedo.jpg
+  - Melee Weapons: Axe-Texture.jpg, Dagger-Texture.jpg, Wand-Default.jpg
+
+3. MAP ENVIRONMENT ASSETS (200+ Assets)
+----------------------------------------
+• Sierra Desert Map:
+  - Terrain: Sierra-Grass.jpg, Sierra-Road.jpg, Sierra-Terrain.jpg, Ground-Sand.png
+  - Architecture: Big-wall.jpg, Wall-Texture.jpg, desert_building_set.jpg, desert_temple_texture.jpg
+  - Thumbnails: Sierra-Thumbnail.jpg, Sierra-512x.jpg, Sierra-Large.jpg
+
+• Temple/Xibalba Dungeon:
+  - Dungeon Textures: dungeon_set_01_color.jpg, dungeon_set_02_atlas_01.jpg, dungeon_set_02_atlas_02.jpg
+  - Floor Tiles: floor_tile_01.jpg, floor_tile_02.jpg, floor_tile_01_metal.jpg, Floor-Ornament.jpg
+  - Architecture: Wall-Texture-4M-Dungeon.jpg, Pillar-Texture-Castle.jpg
+
+• Mistle Winter Map:
+  - Terrain: Mistle-Terrain-1.jpg, Mistle-Terrain-2.jpg, Mistle-Water.jpg
+  - Environment: rock_formation_03.jpg, rock_formation_05.jpg, Winter_Bushes.jpg
+  - Effects: Mistle-Background.jpg, Mistle-Blur.jpg
+
+• Tundra Ice Map:
+  - Ice Textures: ice.jpg, ice61.jpg, ice98.jpg, Ice-Tile.jpg
+  - Snow Elements: snow.jpg, snowy_rock.jpg, T_ENV_snow_01_BC.jpg
+  - Environment: T_ENV_ice_01_BC.jpg, T_ENV_ice_02_BC.jpg
+
+• Runes Mystical Map:
+  - Magical Elements: Runes.jpg, runicStone2.jpg, Rune-Energy.png
+  - Terrain: Runes-Terrain.jpg, TileGround_01.jpg
+  - Effects: FloatingIslands.jpg, Foam-FloatingIslands.jpg
+
+4. UI & INTERFACE ASSETS (300+ Assets)
+---------------------------------------
+• HUD Components:
+  - Health System: Health-bars.png, Health-Bar.png, Health-icon.png, Health-Regen.png
+  - Crosshairs: Crosshair.png, Crosshair-Part.png, Crosshair-Icon.png
+  - Ammunition: Bullets-icon.png, AmmoContainer.png, AmmoAmount.png
+  - Indicators: Damage-Indictator.png, Hitmarker.png, Hit-Impact.png
+
+• Menu & Navigation:
+  - Buttons: Menu-Button.png, Form-Button.png, Rectangle-Button.png
+  - Icons: Cog-Icon.png, Info-Icon.png, Search-Icon.png, Upload-Icon.png
+  - Backgrounds: Menu-Background.jpg, Background-Circle.png, Gradient-Solid.png
+
+• Game Effects & Particles:
+  - Explosions: Explosion.png, Fire-Effect.png, Sparkling.png
+  - Impacts: Hit-Sprite-Low.png, Bullet-Hole.png, Wall-Trace.png
+  - Smoke & Fire: smoke.png, muzzle.png, Fire-Small-Spritesheet.png
+
+• Skybox Textures (48 Assets):
+  - Day/Night Cycles with multiple variants:
+    * Night: FattySky00_Night_01-06.png, FattySkybox03_Night_01-06.png
+    * Sunset: FattySky00_Sunset_01-06.png, FattySkybox03_Sunset_01-06.png
+    * Cloudy: FattySky00_Cloudy_01-06.png, FattySkybox03_Cloudy_01-06.png
+    * Sunny: FattySky00_Sunny_01-06.png, FattySkybox03_Sunny_01-06.png
+
+5. AUDIO ASSET LIBRARY (200+ Sounds)
+-------------------------------------
+• Weapon Audio:
+  - Assault Rifles: AK47-Fire.mp3, M4-Fire.mp3, Scar-Fire.mp3, LMG-Fire.mp3
+  - Sniper Rifles: Sniper-Fire.mp3, AWP-Fire.mp3, Sniper-Zoom.mp3
+  - Pistols: Pistol-Fire.mp3, Desert Eagle sounds
+  - Reload Sounds: AK47-Reload.mp3, Sniper-Reload.mp3, Shotgun-Load.mp3
+
+• Character Voices:
+  - Echo: Echo-Grunt-1/2/3.mp3, Echo-Jump-1/2.mp3, Echo-Death-1.mp3, Echo-Speaking-1/2/3/4.mp3
+  - Shin: Shin-Grunt-1/2/3.mp3, Shin-Jump-1/2.mp3, Shin-Death-1.mp3, Shin-Talk-1/2/3.mp3
+  - Kulu: Kulu-Grunt-1/2/3.mp3, Kulu-Jump-1/2.mp3, Kulu-Death-1.mp3
+
+• Environmental Audio:
+  - Footsteps: Footsteps.mp3, Concrete-Run-1/2/3/4/5/6.mp3, Gravel-Run-1/2/3/4/5/6.mp3
+  - Ambient: Sierra-Ambient.mp3, Ocean.mp3, Wind-Loop.mp3, Thunder-Rain-Ambient.mp3
+  - Impact Effects: Body-Impact-1/2/3.mp3, Impact-Brick-1/2.mp3, Impact-Metal.mp3
+
+• UI & Game Sounds:
+  - Notifications: Chat-Notification.mp3, Beep-Notification.mp3, Rank-Up.mp3
+  - Menu Interactions: Button-Hover.mp3, Primary-Click.mp3, Digital-Select.mp3
+  - Game Events: Headshot.mp3, Announce-Kill.mp3, Announce-2x/3x/4x/God.mp3
+
+BROWSER EXTENSION INTEGRATION
+==============================
+
+1. CHROME EXTENSION ARCHITECTURE
+---------------------------------
+• Manifest V2 Compatibility:
+  - Full permission set for resource interception
+  - webRequest and webRequestBlocking permissions
+  - Access to *.venge.io/* and storage.googleapis.com/*
+  - Local development server support (127.0.0.1:8080)
+
+• Background Script (init.js):
+  - Persistent service worker for request handling
+  - Automatic directory scanning and file registration
+  - Dynamic URL pattern matching for asset replacement
+  - Recursive directory traversal for comprehensive asset coverage
+
+• Web Accessible Resources:
+  - Comprehensive file type support: *.obj, *.fbx, *.gltf, *.glb (3D Models)
+  - Texture formats: *.png, *.jpeg, *.jpg
+  - Media files: *.mp4, *.mp3
+  - Styling: *.css, *.ttf, *.otf
+  - Miscellaneous: *.ico, *.svg, *.txt
+
+2. RESOURCE INTERCEPTION PIPELINE
+----------------------------------
+• Request Monitoring:
+  - webRequest API intercepts Venge.io asset calls
+  - Pattern matching against game asset URLs
+  - Real-time URL redirection to local assets
+
+• Asset Replacement Process:
+  1. Game requests original asset from Venge.io servers
+  2. Extension intercepts request via webRequest listener
+  3. URL matching determines if custom asset exists
+  4. Request redirected to extension's local asset
+  5. CORS headers properly handled for cross-origin requests
+  6. Fallback to original asset if custom not available
+
+• Supported Asset Replacement:
+  - Character model textures and skins
+  - Weapon textures and materials
+  - Map environment textures
+  - UI elements and interface graphics
+  - Audio files and sound effects
+  - 3D models and animations
+
+TEXTURE INFORMATION SYSTEM
+===========================
+
+1. INTERACTIVE TEXTURE DATABASE
+--------------------------------
+• Comprehensive Documentation:
+  - Categorized texture reference guide
+  - Visual examples with in-game context
+  - Technical specifications for each asset type
+  - Modding best practices and recommendations
+
+• Category Organization:
+  - Sierra Wall Textures (Essential wall textures for Sierra map theme)
+  - Sierra Floor and Ground Textures (Terrain and floor surfaces)
+  - Pediment-like Architectural Elements (Hallway textures)
+  - Pillar Textures (Mixed map pillar applications)
+  - Default Character Model Textures (Base character skins)
+  - Skybox Textures (Multiple lighting and atmosphere settings)
+  - Sierra Market Area Building Textures (Market area buildings)
+  - Bounce Pad Textures (In-game bounce pad visuals)
+  - XP Ring Texture (Experience ring visual effects)
+
+• Interactive Features:
+  - Expandable/collapsible category sections
+  - Lightbox modal for detailed texture inspection
+  - Smooth animations and transitions
+  - Responsive design for all screen sizes
+
+2. TECHNICAL SPECIFICATIONS
+----------------------------
+• Texture Guidelines:
+  - Recommended resolutions for optimal performance
+  - Aspect ratio requirements (1:1 for wall textures)
+  - Color space specifications (sRGB with ICC profile support)
+  - Compression recommendations for web delivery
+
+• Format Recommendations:
+  - JPEG for photographic textures and character skins
+  - PNG for UI elements requiring transparency
+  - Optimal resolution guidelines (512x512, 1024x1024)
+  - Memory usage considerations for large collections
+
+PERFORMANCE OPTIMIZATION
+=========================
+
+1. MEMORY MANAGEMENT
+--------------------
+• Blob URL Lifecycle Management:
+  - Automatic cleanup prevents memory leaks
+  - Explicit blob URL revocation after use
+  - Garbage collection optimization
+  - Memory usage monitoring and alerts
+
+• Lazy Loading Strategy:
+  - Assets loaded only when visible or requested
+  - Progressive loading with priority queuing
+  - Intersection Observer for performance
+  - Efficient thumbnail caching system
+
+2. PROCESSING OPTIMIZATIONS
+----------------------------
+• Batch Processing Engine:
+  - Asynchronous processing with Promise.all()
+  - Progress tracking with real-time updates
+  - Error isolation prevents cascade failures
+  - Memory-efficient streaming for large datasets
+
+• Canvas Optimization:
+  - Reusable canvas contexts
+  - Optimal canvas sizing based on image dimensions
+  - Hardware acceleration utilization where available
+  - Efficient pixel manipulation algorithms
+
+• Search Performance:
+  - Debounced search input (300ms delay)
+  - Indexed string matching for O(1) lookups
+  - Case-insensitive search with locale support
+  - Efficient DOM manipulation for results
+
+ADVANCED TECHNICAL FEATURES
+============================
+
+1. IMAGE PROCESSING PIPELINE
+-----------------------------
+• Saturation Algorithm Implementation:
+  ```javascript
+  // Luminance-based saturation adjustment
+  const luminance = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+  pixels[i] = luminance + (r - luminance) * saturationFactor;
+  pixels[i + 1] = luminance + (g - luminance) * saturationFactor;
+  pixels[i + 2] = luminance + (b - luminance) * saturationFactor;
+  ```
+
+• Image Conversion Pipeline:
+  1. Source Loading: Blob → Image object via Object URL
+  2. Canvas Rendering: Image → Canvas with original dimensions
+  3. Pixel Manipulation: Direct ImageData processing
+  4. Format Conversion: Canvas → Blob with target MIME type
+  5. Quality Control: Validation and error handling
+
+2. DATA MANAGEMENT ARCHITECTURE
+-------------------------------
+• Asset Registry System:
+  - Comprehensive asset object structure with metadata
+  - Modification tracking with visual indicators
+  - State management with session persistence
+  - Conflict resolution for concurrent modifications
+
+• Export Data Structure:
+  - Optimized format with image deduplication
+  - Timestamp and description metadata
+  - Unique image mapping system
+  - Asset relationship preservation
+
+ACCESSIBILITY & USER EXPERIENCE
+================================
+
+1. RESPONSIVE DESIGN
+--------------------
+• CSS Grid Layout:
+  - Automatic responsive columns based on viewport
+  - Smooth transitions for state changes
+  - Mobile-friendly interface design
+  - Touch-optimized controls for tablets
+
+• Accessibility Features:
+  - ARIA labels for screen readers
+  - Keyboard navigation support
+  - High contrast mode compatibility
+  - Focus management for modal dialogs
+
+2. USER INTERFACE PATTERNS
+---------------------------
+• Modal System Architecture:
+  - Layered modals support nested dialogs
+  - Proper focus trapping and restoration
+  - Consistent escape key handling
+  - Click-outside-to-close functionality
+
+• Progress Indication System:
+  - Real-time progress tracking with detailed feedback
+  - Console logging for debugging and transparency
+  - Visual progress bars with percentage display
+  - Error reporting with actionable messages
+
+DEVELOPMENT & EXTENSIBILITY
+============================
+
+1. MODULAR ARCHITECTURE
+------------------------
+• File Organization:
+  - asset-list-page.js (Core asset management logic)
+  - asset-editor-modal.js (Texture editing functionality)
+  - bulk-operations.js (Multi-asset operations)
+  - import-export.js (Data management system)
+  - image-converter.js (Image processing utilities)
+  - export-options-popup.js (Export configuration)
+
+• API Structure:
+  - Global asset registry (window.allAssets)
+  - UI card references (window.allCards)
+  - Dynamic card creation functions
+  - Visual state management utilities
+
+2. EXTENSIBILITY FEATURES
+--------------------------
+• Adding New Assets:
+  1. Place files in appropriate mod-assets/ subdirectory
+  2. Update corresponding .txt registry file
+  3. Include asset metadata and ID mapping
+
+• Custom Development:
+  - Custom filter implementation for new image effects
+  - Export format extensions for additional package types
+  - Asset type extensions beyond textures and sounds
+  - Integration capabilities with other modding tools
+
+SECURITY & BEST PRACTICES
+==========================
+
+1. SECURITY MEASURES
+---------------------
+• Client-Side Processing:
+  - All image processing done locally in browser
+  - No server-side dependencies or data transmission
+  - Secure blob URL management
+  - Input validation for all user data
+
+• Extension Security:
+  - Minimal required permissions
+  - Local file access only
+  - No external network requests beyond game assets
+  - Sandboxed execution environment
+
+2. BEST PRACTICES IMPLEMENTATION
+---------------------------------
+• Code Quality:
+  - ES6+ modern JavaScript standards
+  - Modular design with clear separation of concerns
+  - Comprehensive error handling and logging
+  - Performance monitoring and optimization
+
+• User Data Protection:
+  - Local storage only (no cloud data transmission)
+  - Session-based state management
+  - Automatic cleanup of temporary data
+  - Privacy-focused design principles
+
+TECHNICAL REQUIREMENTS
+=======================
+
+1. SYSTEM REQUIREMENTS
+-----------------------
+• Browser Compatibility:
+  - Modern web browsers (Chrome, Firefox, Edge)
+  - HTML5 Canvas API support
+  - ES6+ JavaScript support
+  - Local storage capabilities
+
+• Development Environment:
+  - Local web server for development
+  - Chrome Developer Mode for extension testing
+  - Basic understanding of image editing concepts
+  - File system access for asset management
+
+2. INSTALLATION & SETUP
+------------------------
+• Main Application:
+  1. Clone repository to local system
+  2. Set up local web server (Python, Node.js, or PHP)
+  3. Access application via http://localhost:8080
+  4. Begin asset modification and management
+
+• Browser Extension:
+  1. Navigate to browser-static-files-for-fetch/ directory
+  2. Add custom assets to appropriate folders
+  3. Install in Chrome via Developer Mode
+  4. Load unpacked extension from folder
+  5. Extension automatically intercepts game requests
+
+CONCLUSION
+==========
+This Venge.io Modding Repository represents a comprehensive, professional-grade modding platform that combines advanced web technologies with user-friendly design. It provides everything needed to customize the popular browser-based FPS game, from individual texture editing to bulk asset management and seamless in-game integration via browser extension.
+
+The platform's strength lies in its combination of powerful features, extensive asset library, and intuitive interface, making it accessible to both novice modders and experienced developers. With over 1,200 assets, advanced editing capabilities, and robust export/import systems, it serves as a complete modding ecosystem for the Venge.io community.
+
+The technical architecture ensures optimal performance, security, and extensibility, while the comprehensive documentation and texture reference system provide the guidance needed for successful modding projects. Whether creating simple texture swaps or complex multi-asset modifications, this platform provides all the tools necessary for professional-quality game customization.

@@ -129,6 +129,18 @@
             box-shadow: none;
         }
 
+        /* ZIP Processing Animation */
+        @keyframes processing-pulse {
+            0% { opacity: 1; border-color: var(--text-primary); background: var(--surface-color); }
+            50% { opacity: 0.5; border-color: var(--accent-secondary); background: var(--accent-secondary); color: #000; }
+            100% { opacity: 1; border-color: var(--text-primary); background: var(--surface-color); }
+        }
+
+        .search-button.processing {
+            animation: processing-pulse 0.8s infinite;
+            pointer-events: none; /* Disable click while processing */
+        }
+
         /* Multi Select Actions */
         .multi-select-actions {
             display: flex; /* Hidden by default via JS */
@@ -206,25 +218,35 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            filter: grayscale(100%);
-            transition: filter 0.3s;
+            /* REMOVED grayscale filter to show full color */
+            transition: transform 0.3s;
         }
 
         .texture-card:hover .media-image {
-            filter: grayscale(0%);
+            transform: scale(1.05); /* Subtle zoom on hover instead of color change */
         }
 
         /* MP3 Specifics */
         .texture-card.mp3 .media-container {
             background: var(--accent-primary);
             color: white;
+            cursor: pointer; /* Ensure clickability */
         }
+        
         .media-icon {
-            font-size: 4rem;
-            color: var(--text-primary);
+            font-size: 5rem; /* Larger Play Button */
+            color: #fff;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            transition: transform 0.2s;
         }
-        .texture-card.mp3 .media-icon { color: #fff; }
+
+        .texture-card.mp3:hover .media-icon {
+            transform: scale(1.1);
+            color: var(--accent-secondary);
+        }
+
         .mp3-filename-display { color: var(--text-primary); font-weight: bold; text-align: center; padding: 1rem; }
+        .dark-mode .texture-card.mp3 .mp3-filename-display { color: var(--text-primary); }
 
         /* Texture Info */
         .texture-info {
@@ -345,13 +367,66 @@
             border: var(--border-width) solid var(--text-primary);
             padding: 2rem;
             width: 90%;
-            max-width: 700px;
+            max-width: 700px; /* Standard width */
             box-shadow: 10px 10px 0 var(--accent-primary);
             position: relative;
             display: flex;
             flex-direction: column;
             gap: 1.5rem;
         }
+
+        /* BULK MODAL SPECIFIC FIXES */
+        .bulk-operations-modal-content {
+            max-width: 900px; /* Wider to prevent overlap */
+            padding: 3rem; /* More padding for openness */
+            gap: 2.5rem; /* More gap between sections */
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        /* Sections inside Bulk Modal */
+        .bulk-saturation-control, 
+        .bulk-create-texture-inputs, 
+        .bulk-resize-inputs, 
+        .bulk-upload-texture-inputs, 
+        .bulk-exclude-section {
+            border-bottom: 2px solid var(--text-secondary);
+            padding-bottom: 2rem;
+        }
+        
+        .bulk-exclude-section {
+            border-bottom: none;
+            border-left: 5px solid var(--accent-primary);
+            background: rgba(255, 0, 85, 0.05);
+            padding: 1.5rem;
+        }
+
+        .bulk-operations-modal-content h3 {
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+            color: var(--accent-secondary);
+        }
+
+        .bulk-operations-modal-content .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .bulk-operations-modal-content .input-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .bulk-operations-modal-content input[type="number"],
+        .bulk-operations-modal-content input[type="text"] {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1.1rem;
+        }
+
+        /* --- END BULK MODAL FIXES --- */
 
         .asset-editor-modal-content h2, 
         .bulk-operations-modal-content h2,
@@ -535,24 +610,28 @@
 
             <div class="bulk-saturation-control">
                 <h3>GLOBAL_SATURATION</h3>
-                <input type="range" id="bulk-saturation-slider" min="0" max="200" value="100">
-                <button id="apply-bulk-saturation" class="bulk-action-button">APPLY</button>
+                <div class="input-group">
+                    <input type="range" id="bulk-saturation-slider" min="0" max="200" value="100">
+                </div>
+                <button id="apply-bulk-saturation" class="bulk-action-button">APPLY_SATURATION</button>
             </div>
 
             <div class="bulk-create-texture-inputs">
                 <h3>CREATE_IDENTICAL</h3>
-                <div class="input-group"><label>W</label><input type="number" id="bulk-new-texture-width" value="512"></div>
-                <div class="input-group"><label>H</label><input type="number" id="bulk-new-texture-height" value="512"></div>
-                <div class="input-group"><label>COLOR</label><input type="color" id="bulk-new-texture-color" value="#6c5ce7"></div>
-                <button id="save-bulk-new-texture" class="bulk-action-button">CREATE</button>
+                <div class="input-group"><label>WIDTH</label><input type="number" id="bulk-new-texture-width" value="512"></div>
+                <div class="input-group"><label>HEIGHT</label><input type="number" id="bulk-new-texture-height" value="512"></div>
+                <div class="input-group"><label>COLOR</label><input type="color" id="bulk-new-texture-color" value="#6c5ce7" style="height: 40px;"></div>
+                <button id="save-bulk-new-texture" class="bulk-action-button">CREATE_TEXTURES</button>
             </div>
 
             <div class="bulk-resize-inputs">
                 <h3>RESIZE_SELECTED</h3>
-                <div class="input-group"><label>WIDTH</label><input type="number" id="resize-width"></div>
-                <div class="input-group"><label>HEIGHT</label><input type="number" id="resize-height"></div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="input-group"><label>WIDTH</label><input type="number" id="resize-width"></div>
+                    <div class="input-group"><label>HEIGHT</label><input type="number" id="resize-height"></div>
+                </div>
                 <div class="input-group checkbox-group">
-                    <input type="checkbox" id="maintain-aspect-ratio" checked> <label>MAINTAIN_ASPECT</label>
+                    <input type="checkbox" id="maintain-aspect-ratio" checked> <label style="display:inline;">MAINTAIN_ASPECT</label>
                 </div>
                 <button id="apply-bulk-resize" class="bulk-action-button">RESIZE</button>
             </div>
@@ -563,7 +642,7 @@
                     <label>FILE</label>
                     <input type="file" id="bulk-upload-image-input" accept="image/png, image/jpeg">
                 </div>
-                <div class="image-preview-container" style="border: 1px solid #000; margin-top: 1rem;">
+                <div class="image-preview-container" style="border: 1px solid #000; margin-top: 1rem; min-height: 100px;">
                     <img id="bulk-upload-image-preview" src="" alt="" style="display: none; max-width: 100%;">
                 </div>
                 <button id="apply-bulk-upload-texture" class="bulk-action-button" disabled>APPLY_UPLOAD</button>

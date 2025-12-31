@@ -1,0 +1,221 @@
+<!--
+  Copyright (c) 2025 Charm?
+
+  Licensed under the MIT License. See LICENSE file in the project root for full license information.
+  SPDX-License-Identifier: MIT
+
+  Use of this code requires attribution to the original author.
+
+  This file is the homepage of the site.
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="fav.png">
+    <title>Modding Repository</title>
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-G4VR1D3B6M"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}\r\n  gtag('js', new Date());
+
+  gtag('config', 'G-G4VR1D3B6M');
+</script>
+
+    <link rel="stylesheet" href="asset-list-page.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="asset-editor-modal.css">
+    <link rel="stylesheet" href="bulk-operations-modal.css">
+    <link rel="stylesheet" href="export-options-popup.css">
+</head>
+<body>
+    <header>
+        <h1>Modding Repository</h1>
+        <div class="search-container">
+            <input type="text" id="texture-search" placeholder="Search textures..." class="search-input">
+            <button id="search-button" class="search-button">Search</button>
+            <button id="clear-search-button" class="search-button clear-button">Clear Search</button>
+            <button id="download-all-zip-button" class="search-button">Download All as ZIP</button>
+            <button id="toggle-multi-select-button" class="search-button">Select Assets</button>
+            <input type="file" id="import-file-input" accept=".json" style="display: none;">
+            <button id="import-changes-button" class="search-button">Import Changes</button>
+            <button id="export-changes-button" class="search-button">Export Changes</button>
+            <a href="TextureInfoPage/textures.html" class="search-button" style="text-decoration: none;">Texture Info</a>
+        </div>
+        <div class="multi-select-actions">
+            <span id="selected-assets-count" class="selected-count">0 Assets Selected</span>
+            <button id="select-all-button" class="header-button" title="Select All Visible" style="display: none;">
+            <i class="fas fa-check-double"></i> Select All
+        </button>
+            <button id="open-bulk-edit-button" class="search-button bulk-action-trigger" disabled>Edit Selected Assets</button>
+        </div>
+    </header>
+
+    <main class="container" style="visibility: visible; opacity: 1;">
+        <div id="texture-grid" style="visibility: visible; opacity: 1;">
+            </div>
+    </main>
+
+    <div id="loading-overlay" class="loading-overlay">
+        <div class="loading-window">
+            <h2>Processing...</h2>
+            <div class="progress-bar-container">
+                <div id="progress-bar" class="progress-bar"></div>
+            </div>
+            <div class="progress-text" id="progress-percentage">0%</div>
+            <div class="console-output">
+                <h3>Details:</h3>
+                <pre id="console-log"></pre>
+            </div>
+        </div>
+    </div>
+
+    <div id="asset-editor-modal" class="asset-editor-modal-overlay">
+        <div class="asset-editor-modal-content">
+            <span class="close-button" id="close-editor-modal">&times;</span>
+            <h2 id="modal-asset-name"></h2>
+
+            <div class="modal-tabs">
+                <button class="tab-button active" id="tab-modify">Modify Existing Texture</button>
+                <button class="tab-button" id="tab-create">Create New Texture</button>
+            </div>
+
+            <div class="tab-content" id="content-modify">
+                <h3>Adjust Saturation</h3>
+                <div class="saturation-control">
+                    <label for="saturation-slider">Saturation:</label>
+                    <input type="range" id="saturation-slider" min="0" max="200" value="100">
+                    <span id="saturation-value">100%</span>
+                </div>
+                <div class="canvas-preview-container">
+                    <canvas id="texture-editor-canvas"></canvas>
+                </div>
+                <button id="save-modified-texture" class="modal-action-button">Save Modified Texture</button>
+            </div>
+
+            <div class="tab-content" id="content-create" style="display:none;">
+                <h3>Create New Texture</h3>
+                <div class="create-texture-inputs">
+                    <div class="input-group">
+                        <label for="new-texture-width">Width:</label>
+                        <input type="number" id="new-texture-width" value="512" min="1" max="4096">
+                    </div>
+                    <div class="input-group">
+                        <label for="new-texture-height">Height:</label>
+                        <input type="number" id="new-texture-height" value="512" min="1" max="4096">
+                    </div>
+                    <div class="input-group">
+                        <label for="new-texture-color">Background Color:</label>
+                        <input type="color" id="new-texture-color" value="#6c5ce7">
+                    </div>
+                </div>
+                <button id="save-new-texture" class="modal-action-button">Save New Texture</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="bulk-operations-modal" class="bulk-operations-modal-overlay">
+        <div class="bulk-operations-modal-content">
+            <span class="close-bulk-modal-button" id="close-bulk-modal">&times;</span>
+            <h2>Bulk Texture Operations</h2>
+
+            <div class="bulk-saturation-control">
+                <h3>Apply Saturation to Selected</h3>
+                <div class="input-group">
+                    <label for="bulk-saturation-slider">Saturation:</label>
+                    <input type="range" id="bulk-saturation-slider" min="0" max="200" value="100">
+                    <span id="bulk-saturation-value">100%</span>
+                </div>
+                <button id="apply-bulk-saturation" class="bulk-action-button">Apply Saturation</button>
+            </div>
+
+            <div class="bulk-create-texture-inputs">
+                <h3>Create New Identical Textures for Selected</h3>
+                <div class="input-group">
+                    <label for="bulk-new-texture-width">Width:</label>
+                    <input type="number" id="bulk-new-texture-width" value="512" min="1" max="4096">
+                </div>
+                <div class="input-group">
+                    <label for="bulk-new-texture-height">Height:</label>
+                    <input type="number" id="bulk-new-texture-height" value="512" min="1" max="4096">
+                </div>
+                <div class="input-group">
+                    <label for="bulk-new-texture-color">Background Color:</label>
+                    <input type="color" id="bulk-new-texture-color" value="#6c5ce7">
+                </div>
+                <button id="save-bulk-new-texture" class="bulk-action-button">Create New Textures</button>
+            </div>
+
+            <div class="bulk-resize-inputs">
+                <h3>Resize Selected Textures</h3>
+                <div class="input-group">
+                    <label for="resize-width">Width (pixels):</label>
+                    <input type="number" id="resize-width" min="1" max="4096" placeholder="Original width">
+                </div>
+                <div class="input-group">
+                    <label for="resize-height">Height (pixels):</label>
+                    <input type="number" id="resize-height" min="1" max="4096" placeholder="Original height">
+                </div>
+                <div class="input-group checkbox-group">
+                    <input type="checkbox" id="maintain-aspect-ratio" checked>
+                    <label for="maintain-aspect-ratio">Maintain aspect ratio</label>
+                </div>
+                <button id="apply-bulk-resize" class="bulk-action-button">Resize Textures</button>
+            </div>
+
+            <div class="bulk-upload-texture-inputs">
+                <h3>Upload New Texture for Selected</h3>
+                <div class="input-group">
+                    <label for="bulk-upload-image-input">Choose Image File:</label>
+                    <input type="file" id="bulk-upload-image-input" accept="image/png, image/jpeg">
+                </div>
+                <div class="image-preview-container">
+                    <img id="bulk-upload-image-preview" src="" alt="Uploaded Image Preview" style="display: none;">
+                    <p id="bulk-upload-preview-placeholder" style="text-align: center; color: rgba(255,255,255,0.6);">No image selected</p>
+                </div>
+                <button id="apply-bulk-upload-texture" class="bulk-action-button" disabled>Apply Uploaded Texture</button>
+            </div>
+
+            <div class="bulk-exclude-section">
+                <h3>Exclude from Export</h3>
+                <p>Exclude the currently selected assets from being exported.</p>
+                <button id="toggle-exclude-selected" class="bulk-action-button exclude-button">Exclude Selected from Export</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="export-options-popup" class="export-options-overlay">
+        <div class="export-options-content">
+            <span class="close-export-popup-button" id="close-export-popup">&times;</span>
+            <h2>Select Export Type</h2>
+            <p>Choose the desired ZIP file structure:</p>
+            <div class="export-buttons-container">
+                <button id="export-client-button" class="export-option-button">Client Export</button>
+                <button id="export-browser-button" class="export-option-button">Browser Export</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <script src="asset-list-page.js"></script>
+    <script src="asset-editor-modal.js"></script>
+    <script src="export-options-popup.js"></script>
+    <script src="bulk-operations.js"></script>
+    <!-- Fullscreen Image Viewer -->
+    <div id="fullscreen-viewer" class="fullscreen-viewer">
+        <span class="close-fullscreen">&times;</span>
+        <img id="fullscreen-image" src="" alt="Fullscreen view">
+        <div class="image-info">
+            <span id="fullscreen-filename"></span>
+            <span id="fullscreen-resolution"></span>
+        </div>
+    </div>
+
+    <script src="image-converter.js"></script>
+    <script src="import-export.js"></script>
+</body>
+</html>

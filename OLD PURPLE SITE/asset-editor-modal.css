@@ -1,0 +1,367 @@
+/* Asset Editor Modal Overlay */
+.asset-editor-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8); /* Darker, more opaque background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1001; /* Higher than loading overlay */
+    backdrop-filter: blur(8px); /* Stronger blur */
+    -webkit-backdrop-filter: blur(8px);
+    visibility: hidden; /* Hidden by default */
+    opacity: 0;
+    transition: visibility 0.3s ease, opacity 0.3s ease;
+}
+
+.asset-editor-modal-overlay.active {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Asset Editor Modal Content */
+.asset-editor-modal-content {
+    background: #2a2a2a; /* Dark background */
+    border: 1px solid rgba(255, 255, 255, 0.15); /* Subtle border */
+    border-radius: 12px;
+    padding: 2rem;
+    width: 95%;
+    max-width: 800px; /* Wider modal for canvas and controls */
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6); /* More prominent shadow */
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem; /* Increased spacing */
+    position: relative;
+    color: #ffffff;
+    max-height: 90vh; /* Max height to prevent overflow on small screens */
+    overflow-y: auto; /* Enable scrolling for content if it exceeds max-height */
+}
+
+.asset-editor-modal-content h2 {
+    font-size: 1.8rem;
+    color: #6c5ce7; /* Primary accent color */
+    text-align: center;
+    margin-bottom: 0.5rem;
+    word-break: break-word; /* Allow long filenames to wrap */
+}
+
+/* Close Button */
+.close-button {
+    position: absolute;
+    top: 1rem;
+    right: 1.5rem;
+    font-size: 2.5rem; /* Larger for easier clicking */
+    color: rgba(255, 255, 255, 0.6);
+    cursor: pointer;
+    transition: color 0.2s ease;
+    line-height: 1; /* Prevent extra spacing */
+}
+
+.close-button:hover {
+    color: #fd79a8; /* Highlight on hover */
+}
+
+/* Tab Navigation */
+.modal-tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 0.5rem;
+}
+
+.tab-button {
+    background: transparent;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1.1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-radius: 6px 6px 0 0; /* Rounded top corners */
+}
+
+.tab-button:hover {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.tab-button.active {
+    color: #ffffff;
+    background: rgba(108, 92, 231, 0.2); /* Active tab background */
+    border-bottom: 2px solid #6c5ce7; /* Underline for active tab */
+    font-weight: 600;
+}
+
+/* Tab Content Sections */
+.tab-content h3 {
+    font-size: 1.4rem;
+    color: #fd79a8; /* Secondary accent color */
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+/* Saturation Control */
+.saturation-control {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    justify-content: center;
+}
+
+.saturation-control label {
+    font-size: 1rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+#saturation-slider {
+    flex-grow: 1;
+    -webkit-appearance: none; /* Override default slider styles */
+    appearance: none;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    outline: none;
+    transition: background 0.2s ease;
+}
+
+#saturation-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #6c5ce7, #fd79a8);
+    cursor: grab;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease;
+}
+
+#saturation-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.1);
+}
+
+#saturation-slider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #6c5ce7, #fd79a8);
+    cursor: grab;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease;
+}
+
+#saturation-slider::-moz-range-thumb:hover {
+    transform: scale(1.1);
+}
+
+#saturation-value {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #ffffff;
+    min-width: 50px; /* Ensure space for value */
+    text-align: right;
+}
+
+/* Canvas Preview */
+.canvas-preview-container {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 0 auto 1.5rem; /* Center and space below */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 100%; /* Ensure it fits in modal */
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5); /* Inner shadow for depth */
+}
+
+#texture-editor-canvas {
+    display: block; /* Remove extra space below canvas */
+    max-width: 100%;
+    height: auto; /* Maintain aspect ratio */
+    filter: saturate(100%); /* Default saturation */
+    image-rendering: pixelated; /* For sharper pixel textures if applicable */
+}
+
+/* Create Texture Inputs */
+.create-texture-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.input-group label {
+    font-size: 1rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.input-group input[type="number"],
+.input-group input[type="text"] {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 6px;
+    padding: 0.8rem 1rem;
+    color: #ffffff;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.input-group input[type="number"]:focus,
+.input-group input[type="text"]:focus {
+    border-color: #6c5ce7;
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.input-group input[type="color"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: none;
+    background: transparent;
+    width: 60px; /* Adjust size for color picker */
+    height: 40px;
+    cursor: pointer;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    transition: border-color 0.2s ease;
+}
+
+.input-group input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 0;
+}
+
+.input-group input[type="color"]::-webkit-color-swatch {
+    border: none;
+    border-radius: 6px;
+}
+
+.input-group input[type="color"]::-moz-color-swatch-wrapper {
+    padding: 0;
+}
+
+.input-group input[type="color"]::-moz-color-swatch {
+    border: none;
+    border-radius: 6px;
+}
+
+/* Modal Action Buttons (Save Modified, Save New) */
+.modal-action-button {
+    background: linear-gradient(135deg, #6c5ce7, #fd79a8); /* Primary gradient */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    width: 80%; /* Wider button */
+    max-width: 300px;
+    margin: 0 auto; /* Center button */
+    box-shadow: 0 4px 15px rgba(108, 92, 231, 0.3);
+}
+
+.modal-action-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(108, 92, 231, 0.4);
+}
+
+/* Responsive Adjustments for Modal */
+@media (max-width: 768px) {
+    .asset-editor-modal-content {
+        padding: 1.5rem;
+        gap: 1rem;
+        max-width: 90%;
+    }
+
+    .close-button {
+        font-size: 2rem;
+        top: 0.75rem;
+        right: 1rem;
+    }
+
+    .asset-editor-modal-content h2 {
+        font-size: 1.5rem;
+    }
+
+    .tab-button {
+        padding: 0.6rem 1rem;
+        font-size: 1rem;
+    }
+
+    .tab-content h3 {
+        font-size: 1.2rem;
+    }
+
+    .saturation-control {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .saturation-control label,
+    #saturation-value {
+        font-size: 0.9rem;
+    }
+
+    .input-group label {
+        font-size: 0.9rem;
+    }
+
+    .input-group input[type="number"],
+    .input-group input[type="text"] {
+        padding: 0.7rem 0.8rem;
+        font-size: 0.9rem;
+    }
+
+    .modal-action-button {
+        padding: 0.8rem 1.5rem;
+        font-size: 1rem;
+        width: 90%;
+    }
+}
+
+@media (max-width: 480px) {
+    .asset-editor-modal-content {
+        padding: 1rem;
+        max-width: 95%;
+    }
+
+    .asset-editor-modal-content h2 {
+        font-size: 1.3rem;
+    }
+
+    .tab-button {
+        font-size: 0.9rem;
+        padding: 0.5rem 0.8rem;
+    }
+
+    .tab-content h3 {
+        font-size: 1.1rem;
+    }
+
+    .saturation-control {
+        align-items: stretch;
+    }
+
+    .modal-action-button {
+        font-size: 0.9rem;
+        padding: 0.7rem 1.2rem;
+    }
+}

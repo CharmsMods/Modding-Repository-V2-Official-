@@ -11,11 +11,11 @@
 
 // export-options-popup.js
 
-// DOM Elements (already defined in asset-list-page.js)
-// let exportOptionsPopup;
-// let closeExportPopupButton;
-// let exportClientButton;
-// let exportBrowserButton;
+// DOM Elements
+let exportOptionsPopup;
+let closeExportPopupButton;
+let exportClientButton;
+let exportBrowserButton;
 
 // Initialize DOM elements when the document is loaded
 document.addEventListener('DOMContentLoaded', () => {
@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (exportOptionsPopup && closeExportPopupButton && exportClientButton && exportBrowserButton) {
         // Event listeners for closing the popup
         closeExportPopupButton.addEventListener('click', hideExportOptionsPopup);
-
+        
         // Close popup if clicked outside content
         exportOptionsPopup.addEventListener('click', (event) => {
             if (event.target === exportOptionsPopup) {
@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!closeExportPopupButton) missingElements.push('close-export-popup');
         if (!exportClientButton) missingElements.push('export-client-button');
         if (!exportBrowserButton) missingElements.push('export-browser-button');
-
+        
         const errorMsg = `Missing required DOM elements: ${missingElements.join(', ')}`;
         console.error(errorMsg);
         if (window.updateConsoleLog) {
@@ -63,7 +63,7 @@ async function handleExportButtonClick(exportType) {
         if (typeof window.initiateZipDownload !== 'function') {
             throw new Error('Export functionality not initialized. Please refresh the page.');
         }
-
+        
         hideExportOptionsPopup();
         await window.initiateZipDownload(exportType);
     } catch (error) {
@@ -106,10 +106,6 @@ function hideExportOptionsPopup() {
 // If they are not, you would need to add them to asset-list-page.js
 if (typeof window.showLoadingOverlay === 'undefined') {
     window.showLoadingOverlay = () => {
-        if (window.loadingOverlayTimeoutId) {
-            clearTimeout(window.loadingOverlayTimeoutId);
-            window.loadingOverlayTimeoutId = null;
-        }
         const overlay = document.getElementById('loading-overlay');
         if (overlay) {
             overlay.classList.add('active');
@@ -148,12 +144,7 @@ if (typeof window.hideLoadingOverlayWithDelay === 'undefined') {
         if (loadingMessageDisplay) {
             loadingMessageDisplay.textContent = finalMessage;
         }
-
-        if (window.loadingOverlayTimeoutId) {
-            clearTimeout(window.loadingOverlayTimeoutId);
-        }
-
-        window.loadingOverlayTimeoutId = setTimeout(() => {
+        setTimeout(() => {
             const overlay = document.getElementById('loading-overlay');
             if (overlay) {
                 overlay.classList.remove('active');
@@ -163,7 +154,6 @@ if (typeof window.hideLoadingOverlayWithDelay === 'undefined') {
                     consoleLog.textContent = '';
                 }
             }
-            window.loadingOverlayTimeoutId = null;
         }, delay);
     };
 }

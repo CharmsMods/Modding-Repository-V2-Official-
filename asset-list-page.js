@@ -474,8 +474,13 @@ async function initializeGallery() {
         // Load excluded state from sessionStorage after all assets are loaded
         loadExcludedState();
 
-        // Sort allAssets array alphabetically by filename BEFORE creating cards
-        allAssets.sort((a, b) => a.filename.localeCompare(b.filename));
+        // Sort allAssets: images (png/jpg) first, then mp3s, alphabetically within each group
+        allAssets.sort((a, b) => {
+            const aIsImage = (a.type === 'png' || a.type === 'jpg') ? 0 : 1;
+            const bIsImage = (b.type === 'png' || b.type === 'jpg') ? 0 : 1;
+            if (aIsImage !== bIsImage) return aIsImage - bIsImage;
+            return a.filename.localeCompare(b.filename);
+        });
 
         // Create and append cards for all assets based on the sorted list
         for (const asset of allAssets) {
